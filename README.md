@@ -137,7 +137,7 @@ Ships come in different sizes:
 
 ## Related Projects
 
-Part of the **NuSy** neurosymbolic AI platform by [Congruent Systems](https://congruentsys.com)
+Part of the **NuSy** neurosymbolic AI platform by [Congruent Systems](https://congruentsys.com).
 See the [research](https://congruentsys.com/research/).
 
 - **[nusy-reasoners](https://github.com/Congruentsys/nusy-reasoners)** — proof-carrying reasoning over Apache Arrow; the symbolic core NuSy beings reason with (MIT).
