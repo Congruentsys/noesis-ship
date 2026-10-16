@@ -46,7 +46,7 @@ The daemon connects to the local WebSocket relay and spawns Claude Code sessions
 ### Python Core (requires NATS)
 
 ```bash
-pip install noesis-ship
+pip install git+https://github.com/Congruentsys/noesis-ship.git   # not on PyPI
 ```
 
 ```python
@@ -72,7 +72,7 @@ await bus.subscribe("kanban.*", my_handler)
 
 ### NATS Core (`noesis_ship/core/`)
 
-The nervous system. Sub-millisecond pub/sub, persistent event streams, key-value state, and inter-agent channels.
+The nervous system. Pub/sub, persistent event streams, key-value state, and inter-agent channels.
 
 | Module | Purpose |
 |--------|---------|
@@ -138,10 +138,10 @@ Ships come in different sizes:
 ## Related Projects
 
 Part of the **NuSy** neurosymbolic AI platform by [Congruent Systems](https://congruentsys.com)
-— *software that reasons, not software that guesses.* See the [research](https://congruentsys.com/research/).
+See the [research](https://congruentsys.com/research/).
 
 - **[nusy-reasoners](https://github.com/Congruentsys/nusy-reasoners)** — proof-carrying reasoning over Apache Arrow; the symbolic core NuSy beings reason with (MIT).
-- **[nusy-kanban](https://crates.io/crates/nusy-kanban)** — Arrow-native, distributed kanban for multi-agent teams; coordinates the fleet over noesis-ship.
+- **[nusy-kanban](https://crates.io/crates/nusy-kanban)** (archived) — Arrow-native, distributed kanban for multi-agent teams; coordinates the fleet over noesis-ship.
 - **Ships Comm** (iOS) — voice-first agent communication app (connects via WebSocket).
 
 ## License
