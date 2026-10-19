@@ -80,7 +80,7 @@ yurtle-kanban move EXP-XXX in-progress      # Update status
 Fast, familiar, works offline.
 
 **Centralized:**
-- Navigate to `http://100.113.140.45:3200`
+- Navigate to `http://<mini>:3200`
 - Click project → view board
 - Create expedition via web form
 - Drag card to "in-progress"
@@ -95,7 +95,7 @@ Slower, but better multi-project visibility.
 - Read ACTIVE-CONTEXT.md files
 
 **Centralized:**
-- Open `http://100.113.140.45:3200` on iPhone
+- Open `http://<mini>:3200` on iPhone
 - See all fleet work at a glance
 - Real-time updates as agents work
 
@@ -131,7 +131,7 @@ Create a minimal centralized kanban web UI to evaluate the benefits:
    - Clone repos to `/tmp` on Mini
    - `git pull` every 60s to refresh
    - Read-only (no editing yet)
-4. **Access:** `http://100.113.140.45:3200`
+4. **Access:** `http://<mini>:3200`
 
 **Decision criteria after prototype:**
 - If Captain finds multi-project view valuable → Build Phase 2 (editing, NATS integration)

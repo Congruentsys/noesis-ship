@@ -50,7 +50,7 @@ Messages are JSON over WebSocket:
     { "machine": "M5", "sessionId": "abc123", "active": true }
   ],
   "machine": "M5",
-  "tailscaleIP": "100.109.27.49"
+  "tailscaleIP": "<m5>"
 }
 
 // Client → Server (list available groups)

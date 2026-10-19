@@ -15,7 +15,7 @@ tags: [infrastructure, nats, centralization, ships-comm]
 ## Status: READY — Test on Current Mini M4 (No Purchase Needed!)
 
 **Plan Approved:** 2026-02-21
-**Plan Location:** `/home/hankh959/.claude/plans/floating-crafting-platypus.md`
+**Plan Location:** `<home>/.claude/plans/floating-crafting-platypus.md`
 **Assigned To:** Mini agent (macOS infrastructure work)
 **Test Approach:** Use existing Mini M4 as central server
 
@@ -105,7 +105,7 @@ Dedicated Server (Mac Mini M4)
    NATS_URL=nats://localhost:4222
    MACHINE_NAME=Mini
    AGENTS=dgx:DGX,mini:Mini,m5:M5,copilot:Copilot
-   CLAUDE_SESSION_DIR=/Users/hankh1844/.claude/projects/-Users-hankh1844-projects-nusy-product-team
+   CLAUDE_SESSION_DIR=<home>/.claude/projects/-Users-<user>-projects-nusy-product-team
    ```
 4. Start NATS server (launchd or manual)
 5. Start WebSocket adapter (launchd or manual)
@@ -168,4 +168,4 @@ Dedicated Server (Mac Mini M4)
 ## Plan Details
 
 See full implementation plan with security, rollback, and cost analysis:
-`/home/hankh959/.claude/plans/floating-crafting-platypus.md`
+`<home>/.claude/plans/floating-crafting-platypus.md`

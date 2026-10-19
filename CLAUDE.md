@@ -300,8 +300,8 @@ Each machine has its own `~/.claude/CLAUDE.md` with agent name, hardware specs, 
 | Agent | GitHub | Platform | Role |
 |-------|--------|----------|------|
 | **M5** | hankh95 | MacBook Pro M5 | General development, design |
-| **DGX** | hankh959 | DGX Spark | Heavy compute, training, GPU work |
-| **Mini** | hankh1844 | Mac Mini M4 | Background services, testing |
+| **DGX** | `<user>` | DGX Spark | Heavy compute, training, GPU work |
+| **Mini** | `<user>` | Mac Mini M4 | Background services, testing |
 
 Use your agent name (from `~/.claude/CLAUDE.md`) in:
 - `assignee:` fields in expedition frontmatter

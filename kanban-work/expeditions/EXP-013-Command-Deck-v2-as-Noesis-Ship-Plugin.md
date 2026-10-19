@@ -37,7 +37,7 @@ Port the existing Command Deck dashboard (Gradio-based fleet monitoring UI from 
 ## Target State (noesis-ship plugin)
 
 **Location:** `plugins/command-deck/` (new)
-**Host:** Mini M4 at `http://100.113.140.45:8050`
+**Host:** Mini M4 at `http://<mini>:8050`
 **Tech:** Gradio + NATS subscriptions
 **Port:** 8050 (avoid conflicts with WebSocket 3100, HTTP API 3102)
 
@@ -143,7 +143,7 @@ User Browser (any device on Tailscale)
    <key>ProgramArguments</key>
    <array>
        <string>/usr/bin/python3</string>
-       <string>/Users/hankh1844/projects/noesis-ship/plugins/command-deck/dashboard.py</string>
+       <string><home>/projects/noesis-ship/plugins/command-deck/dashboard.py</string>
    </array>
    <key>EnvironmentVariables</key>
    <dict>
@@ -155,7 +155,7 @@ User Browser (any device on Tailscale)
    ```
 
 2. Start service on Mini
-3. Access via `http://100.113.140.45:8050` (Tailscale) or `http://mini.local:8050` (LAN)
+3. Access via `http://<mini>:8050` (Tailscale) or `http://<mini>:8050` (LAN)
 
 ## Success Criteria
 

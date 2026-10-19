@@ -29,7 +29,7 @@ Build a web-based chat interface hosted on Mini that provides browser access to 
 ## Proposed Solution
 
 **Web Chat Interface** hosted on Mini:
-- **URL:** `http://100.113.140.45:3500` (Tailscale) or `http://mini.local:3500` (LAN)
+- **URL:** `http://<mini>:3500` (Tailscale) or `http://<mini>:3500` (LAN)
 - **Tech:** React + Tailwind CSS (frontend) + WebSocket/NATS (backend)
 - **Features:** Channel-based chat, message history, agent responses, being integration
 
@@ -199,7 +199,7 @@ User Browser (displays response)
 
 4. **WebSocket connection:**
    ```typescript
-   const ws = new WebSocket('ws://100.113.140.45:3500/ws');
+   const ws = new WebSocket('ws://<mini>:3500/ws');
    ws.onmessage = (event) => {
        const msg = JSON.parse(event.data);
        addMessage(msg.channel, msg);
@@ -238,7 +238,7 @@ User Browser (displays response)
      <key>ProgramArguments</key>
      <array>
          <string>/usr/bin/python3</string>
-         <string>/Users/hankh1844/projects/noesis-ship/plugins/web-chat/server.py</string>
+         <string><home>/projects/noesis-ship/plugins/web-chat/server.py</string>
      </array>
      ```
 

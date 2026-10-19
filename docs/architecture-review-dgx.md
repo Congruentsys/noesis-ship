@@ -164,7 +164,7 @@ capabilities:
 channels:
   - engineering
   - code-review
-project_dir: /Users/captain/Projects/nusy-product-team
+project_dir: <home>/Projects/nusy-product-team
 ---
 ```
 
@@ -253,7 +253,7 @@ project_dir: /Users/captain/Projects/nusy-product-team
 ```bash
 BRIDGE_URL=ws://localhost:3100
 MACHINE_NAME=DGX
-PROJECT_DIR=/home/hankh959/projects/nusy-product-team
+PROJECT_DIR=<home>/projects/nusy-product-team
 node agent-daemon.js
 ```
 
@@ -446,7 +446,7 @@ Each machine is autonomous. No central coordination required.
 
 2. **Create first expedition with yurtle-kanban**
    ```bash
-   cd /home/hankh959/projects/noesis-ship
+   cd <home>/projects/noesis-ship
    yurtle-kanban create expedition "Add NATS integration to WebSocket adapter" --push
    ```
 
