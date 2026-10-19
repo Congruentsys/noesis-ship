@@ -6,7 +6,7 @@ This daemon connects NuSy beings to the noesis-ship communication bridge, allowi
 - Receive voice commands via Ships Comm
 - Respond to messages from agents (DGX, M5, Mini)
 - Participate in fleet channels (#fleet, #santiago, etc.)
-- Collaborate with other beings (being-to-being communication)
+- Collaborate with other beings (being-to-being communication) — planned (EXP-016 Phase 5)
 
 ## Architecture
 
@@ -62,18 +62,18 @@ The daemon is configured via environment variables:
 ```bash
 # Run for a single being
 BEINGS=santiago \
-PROJECT_DIR=<home>/projects/nusy-product-team \
+PROJECT_DIR=/path/to/nusy-product-team \
 python3 being_daemon.py
 
 # Run for multiple beings
 BEINGS=santiago,copilot \
-PROJECT_DIR=<home>/projects/nusy-product-team \
+PROJECT_DIR=/path/to/nusy-product-team \
 python3 being_daemon.py
 
 # Connect to remote NATS server
 BEINGS=santiago \
-NATS_URL=nats://<bus-host>:4222 \
-PROJECT_DIR=<home>/projects/nusy-product-team \
+NATS_URL=nats://<nats-host>:4222 \
+PROJECT_DIR=/path/to/nusy-product-team \
 python3 being_daemon.py
 ```
 
@@ -92,7 +92,7 @@ Create `~/Library/LaunchAgents/com.congruentsystems.noesis-ship-being-daemon.pli
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
-        <string><home>/projects/noesis-ship/plugins/being-daemon/being_daemon.py</string>
+        <string>/Users/<you>/projects/noesis-ship/plugins/being-daemon/being_daemon.py</string>
     </array>
 
     <key>EnvironmentVariables</key>
@@ -102,7 +102,7 @@ Create `~/Library/LaunchAgents/com.congruentsystems.noesis-ship-being-daemon.pli
         <key>NATS_URL</key>
         <string>nats://localhost:4222</string>
         <key>PROJECT_DIR</key>
-        <string><home>/projects/nusy-product-team</string>
+        <string>/Users/<you>/projects/nusy-product-team</string>
     </dict>
 
     <key>RunAtLoad</key>
@@ -112,10 +112,10 @@ Create `~/Library/LaunchAgents/com.congruentsystems.noesis-ship-being-daemon.pli
     <true/>
 
     <key>StandardOutPath</key>
-    <string><home>/Library/Logs/being-daemon-stdout.log</string>
+    <string>/Users/<you>/Library/Logs/being-daemon-stdout.log</string>
 
     <key>StandardErrorPath</key>
-    <string><home>/Library/Logs/being-daemon-stderr.log</string>
+    <string>/Users/<you>/Library/Logs/being-daemon-stderr.log</string>
 </dict>
 </plist>
 ```
