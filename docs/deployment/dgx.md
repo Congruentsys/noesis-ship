@@ -40,7 +40,7 @@ Complete guide for deploying Noesis Ship on NVIDIA DGX Spark (Ubuntu Linux) with
 
 You'll need:
 - sudo access for systemd service installation
-- User account with proper permissions for `/home/hankh959/projects/noesis-ship`
+- User account with proper permissions for `<home>/projects/noesis-ship`
 - Firewall configuration rights (if using UFW or iptables)
 
 ## Installation
@@ -48,7 +48,7 @@ You'll need:
 ### 1. Clone the Repository
 
 ```bash
-cd /home/hankh959/projects
+cd <home>/projects
 git clone https://github.com/hankh95/noesis-ship.git
 cd noesis-ship
 ```
@@ -62,7 +62,7 @@ npm install
 ### 3. Install Python Core (Optional for Day 2+)
 
 ```bash
-cd /home/hankh959/projects/noesis-ship
+cd <home>/projects/noesis-ship
 pip install -e .
 ```
 
@@ -93,7 +93,7 @@ nats-server --version
 ### Create .env File
 
 ```bash
-cd /home/hankh959/projects/noesis-ship/packages/relay
+cd <home>/projects/noesis-ship/packages/relay
 cp .env.example .env
 ```
 
@@ -111,7 +111,7 @@ MACHINE_NAME=DGX
 
 # Claude Code session watcher (optional)
 # Path to Claude project sessions dir
-CLAUDE_SESSION_DIR=/home/hankh959/.claude/projects/-home-hankh959-projects-noesis-ship
+CLAUDE_SESSION_DIR=<home>/.claude/projects/-home-<user>-projects-noesis-ship
 
 # Default group ID for session messages
 SESSION_GROUP_ID=fleet
@@ -134,7 +134,7 @@ Key environment variables for systemd services:
 | `AGENTS` | `dgx:DGX,mini:Mini,m5:M5` | Agent roster |
 | `NATS_URL` | `nats://localhost:4222` | NATS server connection |
 | `NODE_ENV` | `production` | Node.js environment |
-| `PROJECT_DIR` | `/home/hankh959/projects/noesis-ship` | Project root |
+| `PROJECT_DIR` | `<home>/projects/noesis-ship` | Project root |
 | `CLAUDE_BIN` | `/usr/local/bin/claude` | Claude CLI path |
 
 ## Systemd Service Setup
@@ -160,9 +160,9 @@ Before=noesis-ship-websocket.service noesis-ship-agent-daemon.service
 
 [Service]
 Type=simple
-User=hankh959
-Group=hankh959
-ExecStart=/home/hankh959/.local/bin/nats-server -js -c /home/hankh959/projects/noesis-ship/config/nats-server.conf
+User=<user>
+Group=<user>
+ExecStart=<home>/.local/bin/nats-server -js -c <home>/projects/noesis-ship/config/nats-server.conf
 Restart=always
 RestartSec=5
 StandardOutput=journal
@@ -197,9 +197,9 @@ Wants=nats-server.service
 
 [Service]
 Type=simple
-User=hankh959
-Group=hankh959
-WorkingDirectory=/home/hankh959/projects/noesis-ship/packages/relay
+User=<user>
+Group=<user>
+WorkingDirectory=<home>/projects/noesis-ship/packages/relay
 ExecStart=/usr/bin/node server.js
 Restart=always
 RestartSec=5
@@ -219,7 +219,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
-ReadWritePaths=/home/hankh959/projects/noesis-ship
+ReadWritePaths=<home>/projects/noesis-ship
 
 # Resource limits
 LimitNOFILE=4096
@@ -242,9 +242,9 @@ Wants=noesis-ship-websocket.service
 
 [Service]
 Type=simple
-User=hankh959
-Group=hankh959
-WorkingDirectory=/home/hankh959/projects/noesis-ship/packages/daemon
+User=<user>
+Group=<user>
+WorkingDirectory=<home>/projects/noesis-ship/packages/daemon
 ExecStart=/usr/bin/node agent-daemon.js
 Restart=always
 RestartSec=5
@@ -255,7 +255,7 @@ SyslogIdentifier=noesis-ship-agent
 # Environment variables
 Environment=NODE_ENV=production
 Environment=BRIDGE_URL=ws://localhost:3100
-Environment=PROJECT_DIR=/home/hankh959/projects/noesis-ship
+Environment=PROJECT_DIR=<home>/projects/noesis-ship
 Environment=CLAUDE_BIN=/usr/local/bin/claude
 Environment=AGENT_NAME=DGX
 Environment=MAX_TURNS=10
@@ -265,8 +265,8 @@ NoNewPrivileges=false
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
-ReadWritePaths=/home/hankh959/projects/noesis-ship
-ReadWritePaths=/home/hankh959/.claude
+ReadWritePaths=<home>/projects/noesis-ship
+ReadWritePaths=<home>/.claude
 
 # Resource limits (higher for LLM inference)
 LimitNOFILE=8192
@@ -297,7 +297,7 @@ sudo systemctl enable noesis-ship-agent-daemon
 
 ### Create NATS Configuration File
 
-Create `/home/hankh959/projects/noesis-ship/config/nats-server.conf`:
+Create `<home>/projects/noesis-ship/config/nats-server.conf`:
 
 ```conf
 # NATS Server Configuration for Noesis Ship
@@ -309,7 +309,7 @@ http: 0.0.0.0:8222  # Monitoring port
 
 # JetStream (persistent messaging)
 jetstream {
-    store_dir: /home/hankh959/projects/noesis-ship/data/jetstream
+    store_dir: <home>/projects/noesis-ship/data/jetstream
     max_mem: 1G
     max_file: 10G
 }
@@ -324,13 +324,13 @@ ping_max: 3
 debug: false
 trace: false
 logtime: true
-log_file: /home/hankh959/projects/noesis-ship/logs/nats-server.log
+log_file: <home>/projects/noesis-ship/logs/nats-server.log
 ```
 
 ### Create Required Directories
 
 ```bash
-cd /home/hankh959/projects/noesis-ship
+cd <home>/projects/noesis-ship
 mkdir -p data/jetstream
 mkdir -p logs
 mkdir -p config/systemd
@@ -443,7 +443,7 @@ Expected output: JSON health data and listening socket.
 netstat -tulpn | grep 3100
 
 # Test WebSocket connection
-cd /home/hankh959/projects/noesis-ship/packages/relay
+cd <home>/projects/noesis-ship/packages/relay
 node test-ws.js
 ```
 
@@ -460,7 +460,7 @@ Expected output: `{"status":"ok","agent":"DGX","uptime":...}`
 
 ### Automated Health Monitoring Script
 
-Create `/home/hankh959/projects/noesis-ship/scripts/health-check.sh`:
+Create `<home>/projects/noesis-ship/scripts/health-check.sh`:
 
 ```bash
 #!/bin/bash
@@ -506,13 +506,13 @@ echo "=== End Health Check ==="
 Make executable:
 
 ```bash
-chmod +x /home/hankh959/projects/noesis-ship/scripts/health-check.sh
+chmod +x <home>/projects/noesis-ship/scripts/health-check.sh
 ```
 
 Run health check:
 
 ```bash
-/home/hankh959/projects/noesis-ship/scripts/health-check.sh
+<home>/projects/noesis-ship/scripts/health-check.sh
 ```
 
 ### Set Up Cron Job for Health Monitoring
@@ -522,7 +522,7 @@ Run health check:
 crontab -e
 
 # Add health check every 5 minutes
-*/5 * * * * /home/hankh959/projects/noesis-ship/scripts/health-check.sh >> /home/hankh959/projects/noesis-ship/logs/health-check.log 2>&1
+*/5 * * * * <home>/projects/noesis-ship/scripts/health-check.sh >> <home>/projects/noesis-ship/logs/health-check.log 2>&1
 ```
 
 ## Log Management
@@ -560,10 +560,10 @@ NATS server logs to file (configured in `nats-server.conf`):
 
 ```bash
 # View NATS log file
-tail -f /home/hankh959/projects/noesis-ship/logs/nats-server.log
+tail -f <home>/projects/noesis-ship/logs/nats-server.log
 
 # Search for errors
-grep -i error /home/hankh959/projects/noesis-ship/logs/nats-server.log
+grep -i error <home>/projects/noesis-ship/logs/nats-server.log
 ```
 
 ### Log Rotation
@@ -573,14 +573,14 @@ Configure logrotate for NATS logs:
 Create `/etc/logrotate.d/noesis-ship`:
 
 ```
-/home/hankh959/projects/noesis-ship/logs/*.log {
+<home>/projects/noesis-ship/logs/*.log {
     daily
     rotate 7
     compress
     delaycompress
     missingok
     notifempty
-    create 0644 hankh959 hankh959
+    create 0644 <user> <user>
     postrotate
         systemctl reload nats-server >/dev/null 2>&1 || true
     endscript
@@ -647,10 +647,10 @@ The systemd service files include security hardening:
 Ensure proper file ownership:
 
 ```bash
-cd /home/hankh959/projects/noesis-ship
+cd <home>/projects/noesis-ship
 
 # Set ownership
-sudo chown -R hankh959:hankh959 .
+sudo chown -R <user>:<user> .
 
 # Restrict permissions on .env
 chmod 600 packages/relay/.env
@@ -663,7 +663,7 @@ chmod +x scripts/*.sh
 
 For production deployments, enable NATS authentication:
 
-Edit `/home/hankh959/projects/noesis-ship/config/nats-server.conf`:
+Edit `<home>/projects/noesis-ship/config/nats-server.conf`:
 
 ```conf
 # Authentication
@@ -726,7 +726,7 @@ sudo systemctl restart noesis-ship-websocket
 **Missing Dependencies**
 
 ```bash
-cd /home/hankh959/projects/noesis-ship
+cd <home>/projects/noesis-ship
 npm install
 sudo systemctl restart noesis-ship-websocket
 ```
@@ -735,7 +735,7 @@ sudo systemctl restart noesis-ship-websocket
 
 ```bash
 # Fix ownership
-sudo chown -R hankh959:hankh959 /home/hankh959/projects/noesis-ship
+sudo chown -R <user>:<user> <home>/projects/noesis-ship
 
 # Restart service
 sudo systemctl restart noesis-ship-websocket
@@ -762,7 +762,7 @@ curl http://localhost:8222/varz
 #### 3. Check NATS Logs
 
 ```bash
-tail -f /home/hankh959/projects/noesis-ship/logs/nats-server.log
+tail -f <home>/projects/noesis-ship/logs/nats-server.log
 ```
 
 #### 4. Restart NATS
@@ -778,7 +778,7 @@ sudo systemctl restart noesis-ship-websocket
 #### 1. Test Local Connection
 
 ```bash
-cd /home/hankh959/projects/noesis-ship/packages/relay
+cd <home>/projects/noesis-ship/packages/relay
 node test-ws.js
 ```
 
@@ -821,7 +821,7 @@ sudo journalctl -u noesis-ship-agent-daemon -f
 #### 3. Manually Test Agent Daemon
 
 ```bash
-cd /home/hankh959/projects/noesis-ship/packages/daemon
+cd <home>/projects/noesis-ship/packages/daemon
 
 # Stop service
 sudo systemctl stop noesis-ship-agent-daemon
@@ -857,7 +857,7 @@ ps aux | grep -E 'node|nats-server|claude'
 curl http://localhost:8222/jsz | jq .
 
 # Check disk usage
-du -sh /home/hankh959/projects/noesis-ship/data/jetstream
+du -sh <home>/projects/noesis-ship/data/jetstream
 ```
 
 #### 3. Adjust Resource Limits
@@ -901,7 +901,7 @@ StartLimitIntervalSec=60
 
 ```bash
 # Validate Node.js syntax
-node -c /home/hankh959/projects/noesis-ship/packages/relay/server.js
+node -c <home>/projects/noesis-ship/packages/relay/server.js
 ```
 
 ### Getting Help
@@ -910,7 +910,7 @@ If issues persist:
 
 1. Collect diagnostic information:
    ```bash
-   /home/hankh959/projects/noesis-ship/scripts/health-check.sh > diagnostic.txt
+   <home>/projects/noesis-ship/scripts/health-check.sh > diagnostic.txt
    sudo journalctl -u 'noesis-ship*' -u nats-server --since "1 hour ago" >> diagnostic.txt
    systemctl status noesis-ship-websocket noesis-ship-agent-daemon nats-server >> diagnostic.txt
    ```
@@ -944,7 +944,7 @@ sudo systemctl status nats-server noesis-ship-websocket noesis-ship-agent-daemon
 sudo journalctl -u 'noesis-ship*' -u nats-server -f
 
 # Health check
-/home/hankh959/projects/noesis-ship/scripts/health-check.sh
+<home>/projects/noesis-ship/scripts/health-check.sh
 ```
 
 ### Service Dependencies
@@ -962,9 +962,9 @@ nats-server (port 4222)
 | `/etc/systemd/system/nats-server.service` | NATS server service definition |
 | `/etc/systemd/system/noesis-ship-websocket.service` | WebSocket adapter service |
 | `/etc/systemd/system/noesis-ship-agent-daemon.service` | Agent daemon service |
-| `/home/hankh959/projects/noesis-ship/config/nats-server.conf` | NATS configuration |
-| `/home/hankh959/projects/noesis-ship/packages/relay/.env` | Environment variables |
-| `/home/hankh959/projects/noesis-ship/logs/nats-server.log` | NATS log file |
+| `<home>/projects/noesis-ship/config/nats-server.conf` | NATS configuration |
+| `<home>/projects/noesis-ship/packages/relay/.env` | Environment variables |
+| `<home>/projects/noesis-ship/logs/nats-server.log` | NATS log file |
 
 ## Next Steps
 

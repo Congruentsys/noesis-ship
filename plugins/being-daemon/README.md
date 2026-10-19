@@ -62,18 +62,18 @@ The daemon is configured via environment variables:
 ```bash
 # Run for a single being
 BEINGS=santiago \
-PROJECT_DIR=/home/hankh959/projects/nusy-product-team \
+PROJECT_DIR=<home>/projects/nusy-product-team \
 python3 being_daemon.py
 
 # Run for multiple beings
 BEINGS=santiago,copilot \
-PROJECT_DIR=/home/hankh959/projects/nusy-product-team \
+PROJECT_DIR=<home>/projects/nusy-product-team \
 python3 being_daemon.py
 
 # Connect to remote NATS server
 BEINGS=santiago \
-NATS_URL=nats://100.113.140.45:4222 \
-PROJECT_DIR=/home/hankh959/projects/nusy-product-team \
+NATS_URL=nats://<bus-host>:4222 \
+PROJECT_DIR=<home>/projects/nusy-product-team \
 python3 being_daemon.py
 ```
 
@@ -92,7 +92,7 @@ Create `~/Library/LaunchAgents/com.congruentsystems.noesis-ship-being-daemon.pli
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
-        <string>/Users/hankh1844/projects/noesis-ship/plugins/being-daemon/being_daemon.py</string>
+        <string><home>/projects/noesis-ship/plugins/being-daemon/being_daemon.py</string>
     </array>
 
     <key>EnvironmentVariables</key>
@@ -102,7 +102,7 @@ Create `~/Library/LaunchAgents/com.congruentsystems.noesis-ship-being-daemon.pli
         <key>NATS_URL</key>
         <string>nats://localhost:4222</string>
         <key>PROJECT_DIR</key>
-        <string>/Users/hankh1844/projects/nusy-product-team</string>
+        <string><home>/projects/nusy-product-team</string>
     </dict>
 
     <key>RunAtLoad</key>
@@ -112,10 +112,10 @@ Create `~/Library/LaunchAgents/com.congruentsystems.noesis-ship-being-daemon.pli
     <true/>
 
     <key>StandardOutPath</key>
-    <string>/Users/hankh1844/Library/Logs/being-daemon-stdout.log</string>
+    <string><home>/Library/Logs/being-daemon-stdout.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/hankh1844/Library/Logs/being-daemon-stderr.log</string>
+    <string><home>/Library/Logs/being-daemon-stderr.log</string>
 </dict>
 </plist>
 ```

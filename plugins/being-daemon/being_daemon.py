@@ -19,7 +19,7 @@ Environment Variables:
 
 Example:
     BEINGS=santiago NATS_URL=nats://localhost:4222 \
-    PROJECT_DIR=/home/hankh959/projects/nusy-product-team \
+    PROJECT_DIR=<home>/projects/nusy-product-team \
     python3 being_daemon.py
 
 Created: 2026-02-21

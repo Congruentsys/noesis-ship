@@ -18,10 +18,10 @@
 
 **Central Server:**
 - **Machine:** Mini (Mac Mini M4)
-- **Tailscale IP:** `100.113.140.45`
+- **Tailscale IP:** `<mini>`
 - **Services Running:**
-  - NATS server: `nats://100.113.140.45:4222`
-  - WebSocket adapter: `ws://100.113.140.45:3100`
+  - NATS server: `nats://<bus-host>:4222`
+  - WebSocket adapter: `ws://<mini>:3100`
   - Agent-daemon: Connected to localhost
 
 **Phase 1 — Mini Setup (✅ COMPLETE):**
@@ -31,15 +31,15 @@
 - All services confirmed running and healthy
 
 **Phase 2 — Agent Reconfiguration:**
-- **DGX (✅ COMPLETE):** Agent-daemon → `ws://100.113.140.45:3100`
+- **DGX (✅ COMPLETE):** Agent-daemon → `ws://<mini>:3100`
   - Local NATS/WebSocket stopped and disabled
   - Systemd service updated and running
-  - Verified connection via logs: "Connected to bridge at ws://100.113.140.45:3100"
-- **M5 (✅ COMPLETE):** Agent-daemon → `ws://100.113.140.45:3100`
+  - Verified connection via logs: "Connected to bridge at `ws://<mini>:3100`"
+- **M5 (✅ COMPLETE):** Agent-daemon → `ws://<mini>:3100`
   - Local WebSocket relay stopped and unloaded
   - New agent-daemon plist created and loaded
   - MCP config updated to point to Mini
-  - Verified connection via logs: "Connected to bridge at ws://100.113.140.45:3100"
+  - Verified connection via logs: "Connected to bridge at `ws://<mini>:3100`"
   - Test message sent via HTTP API: "M5 reporting in"
 
 **Phase 3 — Testing (⏳ READY):**
@@ -119,9 +119,9 @@ node server.js
 
 | Device | Tailscale IP | Role | Status |
 |--------|-------------|------|--------|
-| Mini (Mac Mini M4) | 100.113.140.45 | **Central NATS server** | ✅ Running |
-| DGX (DGX Spark) | 100.72.55.109 | Client | ✅ Connected |
-| M5 (MacBook Pro) | 100.109.27.49 | Client | ✅ Connected |
+| Mini (Mac Mini M4) | `<mini>` | **Central NATS server** | ✅ Running |
+| DGX (DGX Spark) | `<dgx1>` | Client | ✅ Connected |
+| M5 (MacBook Pro) | `<m5>` | Client | ✅ Connected |
 
 ### Mini Central Services
 
@@ -148,11 +148,11 @@ Change the `BRIDGE_URL` environment variable:
 <key>EnvironmentVariables</key>
 <dict>
     <key>BRIDGE_URL</key>
-    <string>ws://100.113.140.45:3100</string>
+    <string>ws://<mini>:3100</string>
     <key>AGENT_NAME</key>
     <string>M5</string>
     <key>PROJECT_DIR</key>
-    <string>/Users/hankh95/Projects/nusy-product-team</string>
+    <string><home>/Projects/nusy-product-team</string>
     <key>CLAUDE_BIN</key>
     <string>/path/to/your/claude</string>
     <key>MAX_TURNS</key>
@@ -179,7 +179,7 @@ launchctl load ~/Library/LaunchAgents/com.congruentsystems.noesis-ship-agent-dae
 
 Check logs to confirm connection to Mini's central server.
 
-**Note:** You do NOT need your own NATS server. Mini is the central hub — all agents connect to Mini's WebSocket relay at `ws://100.113.140.45:3100`.
+**Note:** You do NOT need your own NATS server. Mini is the central hub — all agents connect to Mini's WebSocket relay at `ws://<mini>:3100`.
 
 ---
 
@@ -211,12 +211,12 @@ curl -s -X POST http://localhost:3102/message \
   -d '{"group":"fleet","from":"Mini","message":"What GPU memory is available?","to":"DGX"}'
 
 # DGX asks Mini a question (Mini daemon will respond)
-curl -s -X POST http://100.113.140.45:3102/message \
+curl -s -X POST http://<mini>:3102/message \
   -H "Content-Type: application/json" \
   -d '{"group":"fleet","from":"DGX","message":"How many beings are trained?","to":"Mini"}'
 
 # Broadcast to fleet (NO agent auto-responds — only humans see it)
-curl -s -X POST http://100.113.140.45:3102/message \
+curl -s -X POST http://<mini>:3102/message \
   -H "Content-Type: application/json" \
   -d '{"group":"fleet","from":"Mini","message":"Training complete for santiago-toddler-v12.1"}'
 ```
@@ -398,12 +398,12 @@ Ships Comm / Agent (receives response)
 **What was completed:**
 1. **DGX Phase 2:** Connected to Mini's central server
    - Updated `~/.config/systemd/user/noesis-ship-agent-daemon.service`
-   - Changed `BRIDGE_URL=ws://100.113.140.45:3100`
+   - Changed `BRIDGE_URL=ws://<mini>:3100`
    - Stopped and disabled local NATS/WebSocket services:
      - `systemctl --user stop nats-server noesis-ship-websocket`
      - `systemctl --user disable nats-server noesis-ship-websocket`
    - Reloaded systemd and restarted agent-daemon
-   - Verified connection: "Connected to bridge at ws://100.113.140.45:3100"
+   - Verified connection: "Connected to bridge at `ws://<mini>:3100`"
 
 **Key decisions:**
 - Test centralized architecture on existing Mini M4 (no new hardware purchase)
@@ -425,7 +425,7 @@ Ships Comm / Agent (receives response)
 ### 2026-02-21 — Mini — EXP-010 Phase 1 Complete ✅
 
 **What was completed:**
-1. **Mini Phase 1:** Set up central NATS server at 100.113.140.45
+1. **Mini Phase 1:** Set up central NATS server at `<mini>`
    - NATS server running via launchd
    - WebSocket adapter running on port 3100
    - Agent-daemon connected to localhost
@@ -436,7 +436,7 @@ Ships Comm / Agent (receives response)
 ### 2026-02-21 — DGX — Repository Setup
 
 **What was completed:**
-- Cloned hankh95/noesis-ship to `/home/hankh959/projects/noesis-ship`
+- Cloned hankh95/noesis-ship to `<home>/projects/noesis-ship`
 - Conducted comprehensive architecture review
 - Added yurtle-kanban integration with proper directory structure
 - Created 7 expeditions for platform development
@@ -466,7 +466,7 @@ Ships Comm / Agent (receives response)
 ## Context Notes
 
 - **Architecture:** NATS core (Python) + WebSocket adapter (Node.js) + agent daemon + MCP server
-- **Current State:** Centralized on Mini (100.113.140.45), DGX connected, M5 pending
+- **Current State:** Centralized on Mini (`<mini>`), DGX connected, M5 pending
 - **DGX:** Agent-daemon connected to Mini central server (local NATS/WebSocket disabled)
 - **M5:** Needs Phase 2 reconfiguration to connect to Mini
 - **Ships Comm:** iOS/CarPlay voice app, protocol-compatible with noesis-ship (zero code changes)

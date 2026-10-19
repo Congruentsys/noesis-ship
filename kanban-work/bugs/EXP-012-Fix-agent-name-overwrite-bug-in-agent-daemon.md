@@ -33,14 +33,14 @@ When the bridge sends a status message, it includes `machine: "Mini"` (the centr
 ## Reproduction
 
 **Setup:**
-- Mini: Central NATS server at 100.113.140.45
+- Mini: Central NATS server at `<mini>`
 - DGX: Remote agent connecting to Mini
 - M5: Remote agent connecting to Mini
 
 **Test:**
 ```bash
 # Send directed message to DGX
-curl -X POST http://100.113.140.45:3102/message \
+curl -X POST http://<mini>:3102/message \
   -H "Content-Type: application/json" \
   -d '{"group":"fleet","from":"Mini","message":"What GPU are you running?","to":"DGX"}'
 
@@ -117,7 +117,7 @@ if (msg.type === "status") {
 
 1. **Apply fix** to agent-daemon.js
 2. **Commit and push** to main
-3. **All agents pull** latest code: `cd /home/hankh959/projects/noesis-ship && git pull origin main`
+3. **All agents pull** latest code: `cd <home>/projects/noesis-ship && git pull origin main`
 4. **Restart all agent-daemons:**
    - DGX: `systemctl --user restart noesis-ship-agent-daemon`
    - M5: `launchctl unload ~/Library/LaunchAgents/com.congruentsystems.noesis-ship-agent-daemon.plist && launchctl load ~/Library/LaunchAgents/com.congruentsystems.noesis-ship-agent-daemon.plist`
@@ -125,17 +125,17 @@ if (msg.type === "status") {
 5. **Test directed messages:**
    ```bash
    # Mini → DGX
-   curl -X POST http://100.113.140.45:3102/message \
+   curl -X POST http://<mini>:3102/message \
      -H "Content-Type: application/json" \
      -d '{"group":"fleet","from":"Mini","message":"What GPU are you running?","to":"DGX"}'
 
    # Mini → M5
-   curl -X POST http://100.113.140.45:3102/message \
+   curl -X POST http://<mini>:3102/message \
      -H "Content-Type: application/json" \
      -d '{"group":"fleet","from":"Mini","message":"How many beings trained?","to":"M5"}'
 
    # DGX → Mini
-   curl -X POST http://100.113.140.45:3102/message \
+   curl -X POST http://<mini>:3102/message \
      -H "Content-Type: application/json" \
      -d '{"group":"fleet","from":"DGX","message":"What is your uptime?","to":"Mini"}'
    ```

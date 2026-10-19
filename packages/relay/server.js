@@ -404,7 +404,7 @@ function startBonjour() {
 // inbox file that Claude Code can read.
 
 // Resolve the actual project path from the Claude session dir
-// e.g. ~/.claude/projects/-Users-hankh95-Projects-carclaw -> /Users/hankh95/Projects/carclaw
+// e.g. ~/.claude/projects/-Users-<user>-Projects-carclaw -> /Users/<user>/Projects/carclaw
 function resolveProjectPath() {
   if (!CLAUDE_SESSION_DIR) return null;
   const dirName = path.basename(CLAUDE_SESSION_DIR);

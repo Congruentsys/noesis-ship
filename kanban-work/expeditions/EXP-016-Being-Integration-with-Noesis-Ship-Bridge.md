@@ -248,7 +248,7 @@ if __name__ == '__main__':
 BEINGS=santiago,copilot
 BEING_CLI_PATH=/usr/bin/being-cli
 NATS_URL=nats://localhost:4222
-PROJECT_DIR=/home/hankh959/projects/nusy-product-team
+PROJECT_DIR=<home>/projects/nusy-product-team
 ```
 
 ### Phase 3: Ships Comm Integration (2 hours)
@@ -332,7 +332,7 @@ def send_to_being(self, target_being: str, message: str) -> str:
 <key>ProgramArguments</key>
 <array>
     <string>/usr/bin/python3</string>
-    <string>/Users/hankh1844/projects/noesis-ship/plugins/being-daemon/being_daemon.py</string>
+    <string><home>/projects/noesis-ship/plugins/being-daemon/being_daemon.py</string>
 </array>
 <key>EnvironmentVariables</key>
 <dict>
